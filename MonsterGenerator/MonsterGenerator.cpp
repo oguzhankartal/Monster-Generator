@@ -1,3 +1,4 @@
+#include <array>
 #include <iostream>
 #include <string>
 #include <string_view>
@@ -60,9 +61,26 @@ public:
 class MonsterGenerator
 {
 public:
+
+    static int getRandomNumber(int min, int max)
+    {
+        static constexpr double fraction{ 1.0 / (RAND_MAX + 1.0) };  // static used for efficiency, so we only calculate this value once
+        // evenly distribute the random number across our range
+        return min + static_cast<int>((max - min + 1) * (std::rand() * fraction));
+    }
+
     static Monster generateMonster()
     {
-        return { Monster::Type::skeleton , "Bones", "rattle", 4 };
+        auto type{ static_cast<Monster::Type> (getRandomNumber(0, static_cast<int>(Monster::Type::max_monster_types) - 1)) };
+        int hitPoints{ getRandomNumber(1,100) };
+
+        static constexpr std::array s_names { "Miss", "Meg", "Ngu", "Faker", "Tino", "Sud" };
+        static constexpr std::array s_roars{ "*ROAR*", "*peep*", "*squeal*", "*whine*", "*hum*", "*burp*" };
+
+        auto name{ s_names[getRandomNumber(0, static_cast<int>(s_names.size() - 1))] };
+        auto roar{ s_roars[getRandomNumber(0, static_cast<int>(s_roars.size() - 1))] };
+
+        return { type, name, roar, hitPoints };
     }
 };
 
