@@ -88,9 +88,12 @@ public:
 
 int main()
 {
-    Monster m{ MonsterGenerator::generateMonster() };
-    
-    m.print();
+    std::srand(static_cast<unsigned int>(std::time(nullptr))); // set initial seed value to system clock
+    std::rand();
+
+    Monster myMonster { MonsterGenerator::generateMonster() };
+
+    myMonster.print();
 
     return 0;
 }
