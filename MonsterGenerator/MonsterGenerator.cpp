@@ -1,4 +1,6 @@
 #include <array>
+#include <ctime> // for time()
+#include <cstdlib> // for rand() and srand()
 #include <iostream>
 #include <string>
 #include <string_view>
